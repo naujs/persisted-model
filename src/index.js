@@ -15,6 +15,10 @@ class PersistedModel extends Model {
   name() {
     throw 'Must implement';
   }
+
+  onAfterFind(options = {}) {
+    return this;
+  }
 }
 
 module.exports = PersistedModel;
