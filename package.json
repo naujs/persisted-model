@@ -20,7 +20,7 @@
     "@naujs/model": "0.0.2"
   },
   "devDependencies": {
-    "@naujs/gulp-tasks": "0.0.12",
+    "@naujs/gulp-tasks": "^0.1.0",
     "gulp": "^3.9.0"
   }
 }

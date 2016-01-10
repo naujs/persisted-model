@@ -1,6 +1,6 @@
 'use strict';
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -16,7 +16,7 @@ var Model = require('@naujs/model');
  * @augments Model
  */
 
-var PersistedModel = (function (_Model) {
+var PersistedModel = function (_Model) {
   _inherits(PersistedModel, _Model);
 
   function PersistedModel() {
@@ -26,14 +26,14 @@ var PersistedModel = (function (_Model) {
   }
 
   _createClass(PersistedModel, [{
-    key: 'name',
+    key: 'names',
 
     /**
-     * Returns the table or collection name of this model
-     * @method PersistedModel#name
-     * @return {string}
+     * Returns singular and plural names for this modell
+     * @method PersistedModel#names
+     * @return {Array} [singular, plural]
      */
-    value: function name() {
+    value: function names() {
       throw 'Must implement';
     }
   }, {
@@ -43,9 +43,51 @@ var PersistedModel = (function (_Model) {
 
       return this;
     }
+  }, {
+    key: 'onBeforeCreate',
+    value: function onBeforeCreate() {
+      var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+
+      return true;
+    }
+  }, {
+    key: 'onAfterCreate',
+    value: function onAfterCreate() {
+      var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+
+      return this;
+    }
+  }, {
+    key: 'onBeforeUpdate',
+    value: function onBeforeUpdate() {
+      var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+
+      return true;
+    }
+  }, {
+    key: 'onAfterUpdate',
+    value: function onAfterUpdate() {
+      var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+
+      return this;
+    }
+  }, {
+    key: 'onBeforeSave',
+    value: function onBeforeSave() {
+      var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+
+      return true;
+    }
+  }, {
+    key: 'onAfterSave',
+    value: function onAfterSave() {
+      var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+
+      return this;
+    }
   }]);
 
   return PersistedModel;
-})(Model);
+}(Model);
 
 module.exports = PersistedModel;

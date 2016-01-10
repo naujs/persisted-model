@@ -8,15 +8,39 @@ var Model = require('@naujs/model');
 class PersistedModel extends Model {
 
   /**
-   * Returns the table or collection name of this model
-   * @method PersistedModel#name
-   * @return {string}
+   * Returns singular and plural names for this modell
+   * @method PersistedModel#names
+   * @return {Array} [singular, plural]
    */
-  name() {
+  names() {
     throw 'Must implement';
   }
 
   onAfterFind(options = {}) {
+    return this;
+  }
+
+  onBeforeCreate(options = {}) {
+    return true;
+  }
+
+  onAfterCreate(options = {}) {
+    return this;
+  }
+
+  onBeforeUpdate(options = {}) {
+    return true;
+  }
+
+  onAfterUpdate(options = {}) {
+    return this;
+  }
+
+  onBeforeSave(options = {}) {
+    return true;
+  }
+
+  onAfterSave(options = {}) {
     return this;
   }
 }
