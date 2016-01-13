@@ -8,7 +8,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Model = require('@naujs/model');
+var Model = require('@naujs/model'),
+    _ = require('lodash');
 
 /**
  * @name PersistedModel
@@ -35,6 +36,24 @@ var PersistedModel = function (_Model) {
      */
     value: function names() {
       throw 'Must implement';
+    }
+  }, {
+    key: 'getPersistableAttributes',
+    value: function getPersistableAttributes() {
+      var _this2 = this;
+
+      var attributes = this.attributes();
+      var persistableAttributes = {};
+
+      _.each(attributes, function (options, attr) {
+        if (options.persistable === false) {
+          // skip it
+        } else {
+            persistableAttributes[attr] = _this2[attr];
+          }
+      });
+
+      return persistableAttributes;
     }
   }, {
     key: 'onAfterFind',

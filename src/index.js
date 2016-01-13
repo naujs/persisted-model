@@ -1,4 +1,5 @@
-var Model = require('@naujs/model');
+var Model = require('@naujs/model')
+  , _ = require('lodash');
 
 /**
  * @name PersistedModel
@@ -14,6 +15,21 @@ class PersistedModel extends Model {
    */
   names() {
     throw 'Must implement';
+  }
+
+  getPersistableAttributes() {
+    let attributes = this.attributes();
+    let persistableAttributes = {};
+
+    _.each(attributes, (options, attr) => {
+      if (options.persistable === false) {
+        // skip it
+      } else {
+        persistableAttributes[attr] = this[attr];
+      }
+    });
+
+    return persistableAttributes;
   }
 
   onAfterFind(options = {}) {
