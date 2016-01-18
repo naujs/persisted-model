@@ -27,22 +27,57 @@ var PersistedModel = function (_Model) {
   }
 
   _createClass(PersistedModel, [{
-    key: 'getName',
+    key: 'modelName',
 
     /**
      * Returns the table/collection name for this model
-     * @method PersistedModel#getName
+     * @method PersistedModel#modelName
      * @return {String}
      */
-    value: function getName() {
+    value: function modelName() {
       throw 'Must implement';
+    }
+
+    /**
+     * Returns the primary key for this model
+     * By default it return null which means that
+     * the model will try its best to guest the primary key
+     * which is usually `id` for sql databases or `_id` for mongodb
+     * @method PersistedModel#primaryKey
+     * @return {String}
+     */
+
+  }, {
+    key: 'primaryKey',
+    value: function primaryKey() {
+      return null;
+    }
+
+    /**
+     * Gets the actual value of the primary key
+     * @return {String|Number}
+     */
+
+  }, {
+    key: 'getPrimaryKeyValue',
+    value: function getPrimaryKeyValue() {
+      var key = this.primaryKey();
+      if (!key) {
+        for (var value in ['id', '_id']) {
+          if (this[value] !== void 0) {
+            return this[value];
+          }
+        }
+        return null;
+      }
+      return this[key];
     }
   }, {
     key: 'getPersistableAttributes',
     value: function getPersistableAttributes() {
       var _this2 = this;
 
-      var attributes = this.getAttributes();
+      var attributes = this.attributes();
       var persistableAttributes = {};
 
       _.each(attributes, function (options, attr) {

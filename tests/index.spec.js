@@ -3,7 +3,7 @@
 var PersistedModel = require('../');
 
 class DummyModel extends PersistedModel {
-  getAttributes() {
+  attributes() {
     return {
       firstName: {
         type: PersistedModel.Types.string
