@@ -18,7 +18,7 @@ class PersistedModel extends Model {
   }
 
   getPersistableAttributes() {
-    let attributes = this.attributes();
+    let attributes = this.getAttributes();
     let persistableAttributes = {};
 
     _.each(attributes, (options, attr) => {

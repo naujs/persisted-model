@@ -42,7 +42,7 @@ var PersistedModel = function (_Model) {
     value: function getPersistableAttributes() {
       var _this2 = this;
 
-      var attributes = this.attributes();
+      var attributes = this.getAttributes();
       var persistableAttributes = {};
 
       _.each(attributes, function (options, attr) {
