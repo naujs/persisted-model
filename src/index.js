@@ -10,10 +10,10 @@ class PersistedModel extends Model {
 
   /**
    * Returns the table/collection name for this model
-   * @method PersistedModel#name
+   * @method PersistedModel#getName
    * @return {String}
    */
-  name() {
+  getName() {
     throw 'Must implement';
   }
 

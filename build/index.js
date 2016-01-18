@@ -27,14 +27,14 @@ var PersistedModel = function (_Model) {
   }
 
   _createClass(PersistedModel, [{
-    key: 'name',
+    key: 'getName',
 
     /**
      * Returns the table/collection name for this model
-     * @method PersistedModel#name
+     * @method PersistedModel#getName
      * @return {String}
      */
-    value: function name() {
+    value: function getName() {
       throw 'Must implement';
     }
   }, {
