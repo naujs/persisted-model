@@ -9,11 +9,11 @@ var Model = require('@naujs/model')
 class PersistedModel extends Model {
 
   /**
-   * Returns singular and plural names for this modell
-   * @method PersistedModel#names
-   * @return {Array} [singular, plural]
+   * Returns the table/collection name for this model
+   * @method PersistedModel#name
+   * @return {String}
    */
-  names() {
+  name() {
     throw 'Must implement';
   }
 

@@ -27,14 +27,14 @@ var PersistedModel = function (_Model) {
   }
 
   _createClass(PersistedModel, [{
-    key: 'names',
+    key: 'name',
 
     /**
-     * Returns singular and plural names for this modell
-     * @method PersistedModel#names
-     * @return {Array} [singular, plural]
+     * Returns the table/collection name for this model
+     * @method PersistedModel#name
+     * @return {String}
      */
-    value: function names() {
+    value: function name() {
       throw 'Must implement';
     }
   }, {
