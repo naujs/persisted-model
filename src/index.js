@@ -1,6 +1,11 @@
 var Model = require('@naujs/model')
   , _ = require('lodash');
 
+const DEFAULT_ID_ATTRIBUTES = [
+  'id',
+  '_id'
+];
+
 /**
  * @name PersistedModel
  * @constructor
@@ -34,9 +39,10 @@ class PersistedModel extends Model {
    * @return {String|Number}
    */
   getPrimaryKeyValue() {
-    var key = this.primaryKey();
+    let key = this.primaryKey();
     if (!key) {
-      for (let value in ['id', '_id']) {
+      for (let index in DEFAULT_ID_ATTRIBUTES) {
+        let value = DEFAULT_ID_ATTRIBUTES[index];
         if (this[value] !== void(0)) {
           return this[value];
         }
@@ -44,6 +50,42 @@ class PersistedModel extends Model {
       return null;
     }
     return this[key];
+  }
+
+  setPrimaryKeyValue(value) {
+    if (!value) {
+      return this;
+    }
+
+    let primaryKey = this.primaryKey();
+    if (primaryKey) {
+      this[primaryKey] = value;
+    } else {
+      this.id = value;
+      this._id = value;
+    }
+
+    return this;
+  }
+
+  setAttributes(attributes = {}) {
+    super.setAttributes(attributes);
+
+    let primaryKey = this.primaryKey();
+    if (!primaryKey) {
+      for (let index in DEFAULT_ID_ATTRIBUTES) {
+        let attr = DEFAULT_ID_ATTRIBUTES[index];
+        if (attributes[attr] !== void(0)) {
+          this.setPrimaryKeyValue(attributes[attr]);
+        }
+      }
+    } else {
+      this.setPrimaryKeyValue(attributes[primaryKey]);
+    }
+  }
+
+  isNew() {
+    return !!!this.getPrimaryKeyValue();
   }
 
   getPersistableAttributes() {
