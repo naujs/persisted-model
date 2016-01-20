@@ -48,7 +48,6 @@ describe('PersistedModel', () => {
       });
 
       expect(model.id).toEqual(1);
-      expect(model._id).toEqual(1);
       expect(model.firstName).toEqual('Tan');
     });
 

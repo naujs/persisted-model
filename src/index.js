@@ -1,10 +1,7 @@
 var Model = require('@naujs/model')
   , _ = require('lodash');
 
-const DEFAULT_ID_ATTRIBUTES = [
-  'id',
-  '_id'
-];
+const DEFAULT_ID_ATTRIBUTES = 'id';
 
 /**
  * @name PersistedModel
@@ -24,14 +21,11 @@ class PersistedModel extends Model {
 
   /**
    * Returns the primary key for this model
-   * By default it return null which means that
-   * the model will try its best to guest the primary key
-   * which is usually `id` for sql databases or `_id` for mongodb
    * @method PersistedModel#primaryKey
    * @return {String}
    */
   primaryKey() {
-    return null;
+    return DEFAULT_ID_ATTRIBUTES;
   }
 
   /**
@@ -40,16 +34,10 @@ class PersistedModel extends Model {
    */
   getPrimaryKeyValue() {
     let key = this.primaryKey();
-    if (!key) {
-      for (let index in DEFAULT_ID_ATTRIBUTES) {
-        let value = DEFAULT_ID_ATTRIBUTES[index];
-        if (this[value] !== void(0)) {
-          return this[value];
-        }
-      }
-      return null;
+
+    if (this[key] !== void(0)) {
+      return this[key];
     }
-    return this[key];
   }
 
   setPrimaryKeyValue(value) {
@@ -58,13 +46,7 @@ class PersistedModel extends Model {
     }
 
     let primaryKey = this.primaryKey();
-    if (primaryKey) {
-      this[primaryKey] = value;
-    } else {
-      this.id = value;
-      this._id = value;
-    }
-
+    this[primaryKey] = value;
     return this;
   }
 
@@ -72,16 +54,7 @@ class PersistedModel extends Model {
     super.setAttributes(attributes);
 
     let primaryKey = this.primaryKey();
-    if (!primaryKey) {
-      for (let index in DEFAULT_ID_ATTRIBUTES) {
-        let attr = DEFAULT_ID_ATTRIBUTES[index];
-        if (attributes[attr] !== void(0)) {
-          this.setPrimaryKeyValue(attributes[attr]);
-        }
-      }
-    } else {
-      this.setPrimaryKeyValue(attributes[primaryKey]);
-    }
+    this.setPrimaryKeyValue(attributes[primaryKey]);
   }
 
   isNew() {
