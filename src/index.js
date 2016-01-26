@@ -3,6 +3,34 @@ var Model = require('@naujs/model')
 
 const DEFAULT_ID_ATTRIBUTES = 'id';
 
+const DEFAULT_ENDPOINTS = {
+  'findAll': {
+    'path': '/',
+    'type': 'GET',
+    'args': {
+      'where': 'object',
+      'include': 'any',
+      'field': 'array',
+      'order': 'array',
+      'limit': 'number',
+      'offset': 'number'
+    }
+  },
+
+  'find': {
+    'path': '/',
+    'type': 'GET',
+    'args': {
+      'where': 'object',
+      'include': 'any',
+      'field': 'array',
+      'order': 'array',
+      'limit': 'number',
+      'offset': 'number'
+    }
+  }
+};
+
 /**
  * @name PersistedModel
  * @constructor
@@ -76,6 +104,8 @@ class PersistedModel extends Model {
     return persistableAttributes;
   }
 
+  // Lifecycle hooks
+
   onAfterFind(options = {}) {
     return this;
   }
@@ -102,6 +132,49 @@ class PersistedModel extends Model {
 
   onAfterSave(options = {}) {
     return this;
+  }
+
+  /**
+   * Returns all the API endpoints for this model
+   * @return {Object}
+   * @example
+   * {
+   * 	'findAll': {
+   * 		path: '/',
+   * 		type: 'get',
+   * 		handler: 'findAll' // if omitted the key (`findAll` in this case) will be used
+   * 	},
+   * 	'create': false // specify false or null to disable
+   * }
+   */
+  endPoints() {
+    return {
+
+    };
+  }
+
+  /**
+   * A list of default end points
+   * @return {Object}
+   */
+  defaultEndPoints() {
+    return DEFAULT_ENDPOINTS;
+  }
+
+  /**
+   * Gets the user-defined end points and merge them with the default ones
+   * By default there are 5 endpoints for
+   * - find all records (findAll)
+   * - find one record (find)
+   * - create new record (create)
+   * - update existing record (update)
+   * - delete a record (delete)
+   * @return {Object}
+   */
+  getEndPoints() {
+    let userDefinedEndPoints = this.endPoints();
+
+    return _.extend({}, this.defaultEndPoints(), userDefinedEndPoints);
   }
 }
 

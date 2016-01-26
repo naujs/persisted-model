@@ -15,6 +15,34 @@ var Model = require('@naujs/model'),
 
 var DEFAULT_ID_ATTRIBUTES = 'id';
 
+var DEFAULT_ENDPOINTS = {
+  'findAll': {
+    'path': '/',
+    'type': 'GET',
+    'args': {
+      'where': 'object',
+      'include': 'any',
+      'field': 'array',
+      'order': 'array',
+      'limit': 'number',
+      'offset': 'number'
+    }
+  },
+
+  'find': {
+    'path': '/',
+    'type': 'GET',
+    'args': {
+      'where': 'object',
+      'include': 'any',
+      'field': 'array',
+      'order': 'array',
+      'limit': 'number',
+      'offset': 'number'
+    }
+  }
+};
+
 /**
  * @name PersistedModel
  * @constructor
@@ -112,6 +140,9 @@ var PersistedModel = function (_Model) {
 
       return persistableAttributes;
     }
+
+    // Lifecycle hooks
+
   }, {
     key: 'onAfterFind',
     value: function onAfterFind() {
@@ -160,6 +191,56 @@ var PersistedModel = function (_Model) {
       var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 
       return this;
+    }
+
+    /**
+     * Returns all the API endpoints for this model
+     * @return {Object}
+     * @example
+     * {
+     * 	'findAll': {
+     * 		path: '/',
+     * 		type: 'get',
+     * 		handler: 'findAll' // if omitted the key (`findAll` in this case) will be used
+     * 	},
+     * 	'create': false // specify false or null to disable
+     * }
+     */
+
+  }, {
+    key: 'endPoints',
+    value: function endPoints() {
+      return {};
+    }
+
+    /**
+     * A list of default end points
+     * @return {Object}
+     */
+
+  }, {
+    key: 'defaultEndPoints',
+    value: function defaultEndPoints() {
+      return DEFAULT_ENDPOINTS;
+    }
+
+    /**
+     * Gets the user-defined end points and merge them with the default ones
+     * By default there are 5 endpoints for
+     * - find all records (findAll)
+     * - find one record (find)
+     * - create new record (create)
+     * - update existing record (update)
+     * - delete a record (delete)
+     * @return {Object}
+     */
+
+  }, {
+    key: 'getEndPoints',
+    value: function getEndPoints() {
+      var userDefinedEndPoints = this.endPoints();
+
+      return _.extend({}, this.defaultEndPoints(), userDefinedEndPoints);
     }
   }]);
 
