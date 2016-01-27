@@ -18,7 +18,7 @@ const DEFAULT_ENDPOINTS = {
   },
 
   'find': {
-    'path': '/',
+    'path': '/:id',
     'type': 'GET',
     'args': {
       'where': 'object',
@@ -28,6 +28,21 @@ const DEFAULT_ENDPOINTS = {
       'limit': 'number',
       'offset': 'number'
     }
+  },
+
+  'create': {
+    'path': '/',
+    'type': 'POST'
+  },
+
+  'update': {
+    'path': '/:id',
+    'type': 'PUT'
+  },
+
+  'delete': {
+    'path': '/:id',
+    'type': 'DELETE'
   }
 };
 
