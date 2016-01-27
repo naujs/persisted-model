@@ -29,7 +29,7 @@ var DEFAULT_ENDPOINTS = {
     }
   },
 
-  'find': {
+  'findByPk': {
     'path': '/:id',
     'type': 'GET',
     'args': {
