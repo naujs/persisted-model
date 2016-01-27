@@ -242,6 +242,17 @@ var PersistedModel = function (_Model) {
 
       return _.extend({}, this.defaultEndPoints(), userDefinedEndPoints);
     }
+
+    /**
+     * Returns the API name for this model
+     * @return {String}
+     */
+
+  }, {
+    key: 'apiName',
+    value: function apiName() {
+      return this.modelName();
+    }
   }]);
 
   return PersistedModel;

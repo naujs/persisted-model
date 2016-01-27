@@ -176,6 +176,14 @@ class PersistedModel extends Model {
 
     return _.extend({}, this.defaultEndPoints(), userDefinedEndPoints);
   }
+
+  /**
+   * Returns the API name for this model
+   * @return {String}
+   */
+  apiName() {
+    return this.modelName();
+  }
 }
 
 module.exports = PersistedModel;
