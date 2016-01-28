@@ -31,7 +31,10 @@ var DEFAULT_ENDPOINTS = {
 
   'findByPk': {
     'path': '/:id',
-    'type': 'GET'
+    'type': 'GET',
+    'args': {
+      'id': 'any'
+    }
   },
 
   'create': {
