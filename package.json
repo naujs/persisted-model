@@ -17,10 +17,13 @@
   },
   "homepage": "https://github.com/naujs/persisted-model#readme",
   "dependencies": {
-    "@naujs/model": "^0.1.2"
+
+  },
+  "optionalDependencies": {
+    "@naujs/model": "^0.1.2",
+    "@naujs/gulp-tasks": "^0.1.0"
   },
   "devDependencies": {
-    "@naujs/gulp-tasks": "^0.1.0",
     "gulp": "^3.9.0"
   }
 }
