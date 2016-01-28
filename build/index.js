@@ -31,15 +31,7 @@ var DEFAULT_ENDPOINTS = {
 
   'findByPk': {
     'path': '/:id',
-    'type': 'GET',
-    'args': {
-      'where': 'object',
-      'include': 'any',
-      'field': 'array',
-      'order': 'array',
-      'limit': 'number',
-      'offset': 'number'
-    }
+    'type': 'GET'
   },
 
   'create': {
