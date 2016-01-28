@@ -119,6 +119,15 @@ class PersistedModel extends Model {
     return persistableAttributes;
   }
 
+  toJSON() {
+    let json = super.toJSON();
+    let pk = this.getPrimaryKeyValue();
+    if (pk) {
+      json[this.primaryKey()] = pk;
+    }
+    return json;
+  }
+
   // Lifecycle hooks
 
   onAfterFind(options = {}) {
