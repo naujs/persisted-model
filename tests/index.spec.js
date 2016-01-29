@@ -1,6 +1,56 @@
 'use strict';
 
-var PersistedModel = require('../');
+var PersistedModel = require('../')
+  , _ = require('lodash');
+
+const DEFAULT_ENDPOINTS = {
+  'findAll': {
+    'path': '/',
+    'type': 'GET',
+    'args': {
+      'where': 'object',
+      'include': 'any',
+      'field': ['string'],
+      'order': ['string'],
+      'limit': 'number',
+      'offset': 'number'
+    }
+  },
+  'findByPk': {
+    'path': '/:id',
+    'type': 'GET',
+    'args': {
+      'id': {
+        'type': 'number',
+        'required': true
+      }
+    }
+  },
+  'create': {
+    'path': '/',
+    'type': 'POST'
+  },
+  'update': {
+    'path': '/:id',
+    'type': 'PUT',
+    'args': {
+      'id': {
+        'type': 'number',
+        'required': true
+      }
+    }
+  },
+  'delete': {
+    'path': '/:id',
+    'type': 'DELETE',
+    'args': {
+      'id': {
+        'type': 'number',
+        'required': true
+      }
+    }
+  }
+};
 
 class DummyModel extends PersistedModel {
   attributes() {
@@ -14,6 +64,15 @@ class DummyModel extends PersistedModel {
       name: {
         type: PersistedModel.Types.string,
         persistable: false
+      }
+    };
+  }
+
+  endPoints() {
+    return {
+      'test': {
+        path: 'test',
+        type: 'GET'
       }
     };
   }
@@ -80,6 +139,23 @@ describe('PersistedModel', () => {
       });
 
       expect(model.isNew()).toBe(false);
+    });
+  });
+
+  describe('#defaultEndPoints', () => {
+    it('should construct default end points using the defined primary key', () => {
+      expect(model.defaultEndPoints()).toEqual(DEFAULT_ENDPOINTS);
+    });
+  });
+
+  describe('#getEndPoints', () => {
+    it('should merge user-defined end points and default end points', () => {
+      expect(model.getEndPoints()).toEqual(_.extend({
+        'test': {
+          path: 'test',
+          type: 'GET'
+        }
+      }, DEFAULT_ENDPOINTS));
     });
   });
 });

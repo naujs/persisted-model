@@ -15,44 +15,6 @@ var Model = require('@naujs/model'),
 
 var DEFAULT_ID_ATTRIBUTES = 'id';
 
-var DEFAULT_ENDPOINTS = {
-  'findAll': {
-    'path': '/',
-    'type': 'GET',
-    'args': {
-      'where': 'object',
-      'include': 'any',
-      'field': 'array',
-      'order': 'array',
-      'limit': 'number',
-      'offset': 'number'
-    }
-  },
-
-  'findByPk': {
-    'path': '/:id',
-    'type': 'GET',
-    'args': {
-      'id': 'any'
-    }
-  },
-
-  'create': {
-    'path': '/',
-    'type': 'POST'
-  },
-
-  'update': {
-    'path': '/:id',
-    'type': 'PUT'
-  },
-
-  'delete': {
-    'path': '/:id',
-    'type': 'DELETE'
-  }
-};
-
 /**
  * @name PersistedModel
  * @constructor
@@ -90,6 +52,11 @@ var PersistedModel = (function (_Model) {
     key: 'primaryKey',
     value: function primaryKey() {
       return DEFAULT_ID_ATTRIBUTES;
+    }
+  }, {
+    key: 'primaryKeyType',
+    value: function primaryKeyType() {
+      return 'number';
     }
 
     /**
@@ -232,6 +199,21 @@ var PersistedModel = (function (_Model) {
     value: function endPoints() {
       return {};
     }
+  }, {
+    key: '_defaultArgsForId',
+    value: function _defaultArgsForId() {
+      var args = {};
+      args[this.primaryKey()] = {
+        'type': this.primaryKeyType(),
+        'required': true
+      };
+      return args;
+    }
+  }, {
+    key: '_defaultPathForId',
+    value: function _defaultPathForId() {
+      return '/:' + this.primaryKey();
+    }
 
     /**
      * A list of default end points
@@ -241,7 +223,43 @@ var PersistedModel = (function (_Model) {
   }, {
     key: 'defaultEndPoints',
     value: function defaultEndPoints() {
-      return DEFAULT_ENDPOINTS;
+      return {
+        'findAll': {
+          'path': '/',
+          'type': 'GET',
+          'args': {
+            'where': 'object',
+            'include': 'any',
+            'field': ['string'],
+            'order': ['string'],
+            'limit': 'number',
+            'offset': 'number'
+          }
+        },
+
+        'findByPk': {
+          'path': this._defaultPathForId(),
+          'type': 'GET',
+          'args': this._defaultArgsForId()
+        },
+
+        'create': {
+          'path': '/',
+          'type': 'POST'
+        },
+
+        'update': {
+          'path': this._defaultPathForId(),
+          'type': 'PUT',
+          'args': this._defaultArgsForId()
+        },
+
+        'delete': {
+          'path': this._defaultPathForId(),
+          'type': 'DELETE',
+          'args': this._defaultArgsForId()
+        }
+      };
     }
 
     /**

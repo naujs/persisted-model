@@ -3,44 +3,6 @@ var Model = require('@naujs/model')
 
 const DEFAULT_ID_ATTRIBUTES = 'id';
 
-const DEFAULT_ENDPOINTS = {
-  'findAll': {
-    'path': '/',
-    'type': 'GET',
-    'args': {
-      'where': 'object',
-      'include': 'any',
-      'field': 'array',
-      'order': 'array',
-      'limit': 'number',
-      'offset': 'number'
-    }
-  },
-
-  'findByPk': {
-    'path': '/:id',
-    'type': 'GET',
-    'args': {
-      'id': 'any'
-    }
-  },
-
-  'create': {
-    'path': '/',
-    'type': 'POST'
-  },
-
-  'update': {
-    'path': '/:id',
-    'type': 'PUT'
-  },
-
-  'delete': {
-    'path': '/:id',
-    'type': 'DELETE'
-  }
-};
-
 /**
  * @name PersistedModel
  * @constructor
@@ -64,6 +26,10 @@ class PersistedModel extends Model {
    */
   primaryKey() {
     return DEFAULT_ID_ATTRIBUTES;
+  }
+
+  primaryKeyType() {
+    return 'number';
   }
 
   /**
@@ -172,12 +138,61 @@ class PersistedModel extends Model {
     };
   }
 
+  _defaultArgsForId() {
+    let args = {};
+    args[this.primaryKey()] = {
+      'type': this.primaryKeyType(),
+      'required': true
+    };
+    return args;
+  }
+
+  _defaultPathForId() {
+    return '/:' + this.primaryKey();
+  }
+
   /**
    * A list of default end points
    * @return {Object}
    */
   defaultEndPoints() {
-    return DEFAULT_ENDPOINTS;
+    return {
+      'findAll': {
+        'path': '/',
+        'type': 'GET',
+        'args': {
+          'where': 'object',
+          'include': 'any',
+          'field': ['string'],
+          'order': ['string'],
+          'limit': 'number',
+          'offset': 'number'
+        }
+      },
+
+      'findByPk': {
+        'path': this._defaultPathForId(),
+        'type': 'GET',
+        'args': this._defaultArgsForId()
+      },
+
+      'create': {
+        'path': '/',
+        'type': 'POST'
+      },
+
+      'update': {
+        'path': this._defaultPathForId(),
+        'type': 'PUT',
+        'args': this._defaultArgsForId()
+      },
+
+      'delete': {
+        'path': this._defaultPathForId(),
+        'type': 'DELETE',
+        'args': this._defaultArgsForId()
+      }
+    };
   }
 
   /**
