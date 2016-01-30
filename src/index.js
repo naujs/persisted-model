@@ -119,6 +119,14 @@ class PersistedModel extends Model {
     return this;
   }
 
+  onBeforeDelete(options = {}) {
+    return true;
+  }
+
+  onAfterDelete(options = {}) {
+    return this;
+  }
+
   /**
    * Returns all the API endpoints for this model
    * @return {Object}

@@ -179,6 +179,20 @@ var PersistedModel = (function (_Model) {
 
       return this;
     }
+  }, {
+    key: 'onBeforeDelete',
+    value: function onBeforeDelete() {
+      var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+
+      return true;
+    }
+  }, {
+    key: 'onAfterDelete',
+    value: function onAfterDelete() {
+      var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+
+      return this;
+    }
 
     /**
      * Returns all the API endpoints for this model
