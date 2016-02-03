@@ -268,7 +268,7 @@ var PersistedModel = (function (_Model) {
           'args': this._defaultArgsForId()
         },
 
-        'delete': {
+        'deleteByPk': {
           'path': this._defaultPathForId(),
           'type': 'DELETE',
           'args': this._defaultArgsForId()

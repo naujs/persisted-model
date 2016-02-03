@@ -40,7 +40,7 @@ const DEFAULT_ENDPOINTS = {
       }
     }
   },
-  'delete': {
+  'deleteByPk': {
     'path': '/:id',
     'type': 'DELETE',
     'args': {
